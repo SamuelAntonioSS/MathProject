@@ -1,0 +1,165 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* App.css */
+
+/* Contenedor principal */
+.container {
+  padding: 20px;
+  max-width: 1600px; /* aún más ancho */
+  margin: auto;
+}
+
+/* Tarjetas */
+.card {
+  background-color: #f3f4f6; /* gris claro */
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  margin-bottom: 40px;
+  overflow-x: auto;
+}
+
+/* Tablas modernas */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* separa filas como tarjetas */
+  font-size: 16px;
+}
+
+/* Encabezados de tabla */
+th {
+  background-color: #4f46e5; /* azul oscuro */
+  color: white;
+  font-weight: 700;
+  padding: 16px 20px;
+  text-align: left;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Filas de tabla */
+tr {
+  background-color: #ffffff; /* blanco para filas */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+td {
+  padding: 16px 20px;
+  color: #1f2937;
+}
+
+/* Hover de filas */
+tr:hover td {
+  background-color: #e0e7ff;
+  transition: 0.3s;
+}
+
+/* Opcional: primera fila de tr estilo tarjeta */
+tbody tr:first-child td {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Botones dentro de tabla */
+button {
+  padding: 8px 14px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #4338ca;
+  transform: scale(1.05);
+}
+
+/* Scroll horizontal si tabla es muy grande */
+.card {
+  overflow-x: auto;
+}
+
+/* Fondo general degradado */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e0e7ff, #f0f2f5);
+  margin: 0;
+  padding: 0;
+  color: #1f2937;
+}
+
+/* Encabezados */
+h2 {
+  color: #4f46e5;
+  margin-bottom: 25px;
+  font-size: 32px;
+  text-align: center;
+}
+
+nav {
+  background-color: #4f46e5; /* azul moderno */
+  padding: 12px 30px; /* más padding general */
+  display: flex;
+  gap: 20px; /* separación entre links */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  align-items: center; /* centrar verticalmente */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px; /* más espacio interno para "respirar" */
+  border-radius: 10px;
+  transition: background 0.3s, transform 0.2s;
+  font-weight: 600;
+}
+
+nav a:hover {
+  background-color: #4338ca;
+  transform: scale(1.05);
+}
+
+/* Opcional: resaltar el link activo */
+nav a.active {
+  background-color: #6366f1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
