@@ -2,7 +2,7 @@
 const API_URL =  'https://mathproject.onrender.com/api';
 
 const PlanillaService = {
-  // Obtener todas las planillas
+  // Obtener todas las planillas si
   getAllPlanillas: async () => {
     try {
       const response = await fetch(`${API_URL}/planillas`);
