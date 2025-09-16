@@ -50,21 +50,27 @@ mongoose.connection.on('disconnected', () => {
 
 // Configuración de CORS
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://math-project-pmdv.vercel.app" // tu frontend en Vercel
+  "http://localhost:5173",         // Origen de desarrollo local
+  "https://math-project-pmdv.vercel.app" // Origen de producción en Vercel
 ];
- // Ajusta según tu frontend
 
+// Ajuste en la configuración de CORS
 app.use(cors({
   origin: function(origin, callback) {
+    // Si no hay origen (caso de peticiones sin origen, como en postman), permitimos la solicitud
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
+
+    // Si el origen está en nuestra lista de orígenes permitidos, aceptamos la solicitud
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    } else {
+      // Si el origen no está permitido, bloqueamos la solicitud
       const msg = `La política CORS no permite acceso desde el origen: ${origin}`;
+      console.warn(msg); // Para depuración, imprime el mensaje en consola
       return callback(new Error(msg), false);
     }
-    return callback(null, true);
   },
-  credentials: true,
+  credentials: true, // Permite el uso de cookies y credenciales en las peticiones
 }));
 
 // Middlewares
