@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:4000/api'; // Cambia el puerto según tu backend
+const API_BASE_URL = 'https://mathproject.onrender.com/api'; // Cambia el puerto según tu backend
 
 const contabilidadService = {
   // Obtener todos los registros de contabilidad

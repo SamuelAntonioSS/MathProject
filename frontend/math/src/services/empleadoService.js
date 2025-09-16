@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:4000'; // Cambia por la URL de tu backend
+const API_BASE_URL = 'https://mathproject.onrender.com/api'; // Cambia por la URL de tu backend
 
 class EmpleadoService {
   
