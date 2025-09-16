@@ -5,7 +5,7 @@ class EmpleadoService {
   // Obtener todos los empleados
   static async getAllEmpleados() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/empleados`);
+      const response = await fetch(`${API_BASE_URL}/empleados`);
       if (!response.ok) {
         throw new Error('Error al obtener empleados');
       }
@@ -19,7 +19,7 @@ class EmpleadoService {
   // Crear nuevo empleado
   static async createEmpleado(empleadoData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/empleados`, {
+      const response = await fetch(`${API_BASE_URL}/empleados`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ class EmpleadoService {
   // Actualizar empleado
   static async updateEmpleado(id, empleadoData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/empleados/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/empleados/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ class EmpleadoService {
   // Eliminar empleado
   static async deleteEmpleado(id) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/empleados/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/empleados/${id}`, {
         method: 'DELETE',
       });
       
