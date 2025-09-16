@@ -48,7 +48,11 @@ mongoose.connection.on('disconnected', () => {
 });
 
 // Configuración de CORS
-const allowedOrigins = ["http://localhost:5173"]; // Ajusta según tu frontend
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://math-project-pmdv.vercel.app" // tu frontend en Vercel
+];
+ // Ajusta según tu frontend
 
 app.use(cors({
   origin: function(origin, callback) {
