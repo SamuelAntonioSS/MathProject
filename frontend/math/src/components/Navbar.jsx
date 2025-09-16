@@ -1,12 +1,56 @@
+// components/Navbar.jsx
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
+  const location = useLocation();
+  
+  const isActive = (path) => location.pathname === path;
+  
   return (
-    <nav style={{ padding: "10px", backgroundColor: "#333", color: "#fff" }}>
-      <Link style={{ color: "#fff", marginRight: "10px" }} to="/empleados">Empleados</Link>
-      <Link style={{ color: "#fff", marginRight: "10px" }} to="/planilla">Planilla</Link>
-      <Link style={{ color: "#fff" }} to="/contabilidad">Contabilidad</Link>
+    <nav className="modern-navbar">
+      <div className="navbar-brand">
+        <Link to="/" className="brand-link">
+          <div className="brand-icon">💼</div>
+          <span className="brand-text">Sistema Empresarial</span>
+        </Link>
+      </div>
+      
+      <div className="navbar-links">
+        <Link 
+          to="/" 
+          className={`nav-link ${isActive('/') ? 'active' : ''}`}
+        >
+          <span className="nav-icon">🏠</span>
+          Inicio
+        </Link>
+        <Link 
+          to="/empleados" 
+          className={`nav-link ${isActive('/empleados') ? 'active' : ''}`}
+        >
+          <span className="nav-icon">👥</span>
+          Empleados
+        </Link>
+        <Link 
+          to="/planilla" 
+          className={`nav-link ${isActive('/planilla') ? 'active' : ''}`}
+        >
+          <span className="nav-icon">📋</span>
+          Planilla
+        </Link>
+        <Link 
+          to="/contabilidad" 
+          className={`nav-link ${isActive('/contabilidad') ? 'active' : ''}`}
+        >
+          <span className="nav-icon">📊</span>
+          Contabilidad
+        </Link>
+      </div>
+      
+      <div className="navbar-user">
+        <div className="user-avatar">👤</div>
+        <span className="user-name">Admin</span>
+      </div>
     </nav>
   );
 }

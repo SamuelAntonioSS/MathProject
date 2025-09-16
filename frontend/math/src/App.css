@@ -1,79 +1,332 @@
+/* App.css - Estilos completos y modernos */
+
+/* Reset y configuración base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ¡IMPORTANTE! Quita estas reglas que centraban todo */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  /* Eliminamos max-width, margin: 0 auto y text-align: center */
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #1f2937;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ===== NAVBAR STYLES ===== */
+.modern-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.brand-icon {
+  font-size: 2rem;
+  margin-right: 0.75rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  color: #4b5563;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.nav-link:hover:before {
+  left: 100%;
+}
+
+.nav-link:hover {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.nav-icon {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 25px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* ===== HOME PAGE STYLES ===== */
+.home-container {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.hero-content {
+  max-width: 1200px;
+  width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4rem;
+  font-weight: 300;
 }
 
-/* App.css */
-
-/* Contenedor principal */
-.container {
-  padding: 20px;
-  max-width: 1600px; /* aún más ancho */
-  margin: auto;
+.hero-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
-/* Tarjetas */
+.hero-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #1f2937;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover:before {
+  transform: scaleX(1);
+}
+
+.hero-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.hero-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.card-arrow {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #667eea;
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover .card-arrow {
+  transform: translateX(10px);
+}
+
+/* ===== STATS SECTION ===== */
+.stats-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+  color: white;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* ===== PAGE CONTAINER (para otras páginas) ===== */
+.page-container {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-container h2 {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== CARDS GENERALES ===== */
 .card {
-  background-color: #f3f4f6; /* gris claro */
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  margin-bottom: 40px;
-  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 2rem;
 }
 
-/* Tablas modernas */
+/* ===== TABLES (mejorando las existentes) ===== */
 table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px; /* separa filas como tarjetas */
+  border-spacing: 0 10px;
   font-size: 16px;
 }
 
-/* Encabezados de tabla */
 th {
-  background-color: #4f46e5; /* azul oscuro */
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   font-weight: 700;
   padding: 16px 20px;
   text-align: left;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-radius: 12px 12px 0 0;
 }
 
-/* Filas de tabla */
 tr {
-  background-color: #ffffff; /* blanco para filas */
+  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
@@ -81,85 +334,80 @@ tr {
 td {
   padding: 16px 20px;
   color: #1f2937;
+  border-radius: 0 0 12px 12px;
 }
 
-/* Hover de filas */
 tr:hover td {
   background-color: #e0e7ff;
   transition: 0.3s;
 }
 
-/* Opcional: primera fila de tr estilo tarjeta */
-tbody tr:first-child td {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-/* Botones dentro de tabla */
+/* ===== BUTTONS (mejorando los existentes) ===== */
 button {
-  padding: 8px 14px;
-  background-color: #4f46e5;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s, transform 0.2s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 button:hover {
-  background-color: #4338ca;
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
-/* Scroll horizontal si tabla es muy grande */
-.card {
-  overflow-x: auto;
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .modern-navbar {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-container h2 {
+    font-size: 2rem;
+  }
 }
 
-/* Fondo general degradado */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #e0e7ff, #f0f2f5);
-  margin: 0;
-  padding: 0;
-  color: #1f2937;
+@media (max-width: 480px) {
+  .modern-navbar {
+    padding: 0.75rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .hero-section {
+    padding: 2rem 1rem;
+  }
 }
-
-/* Encabezados */
-h2 {
-  color: #4f46e5;
-  margin-bottom: 25px;
-  font-size: 32px;
-  text-align: center;
-}
-
-nav {
-  background-color: #4f46e5; /* azul moderno */
-  padding: 12px 30px; /* más padding general */
-  display: flex;
-  gap: 20px; /* separación entre links */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  align-items: center; /* centrar verticalmente */
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px; /* más espacio interno para "respirar" */
-  border-radius: 10px;
-  transition: background 0.3s, transform 0.2s;
-  font-weight: 600;
-}
-
-nav a:hover {
-  background-color: #4338ca;
-  transform: scale(1.05);
-}
-
-/* Opcional: resaltar el link activo */
-nav a.active {
-  background-color: #6366f1;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
