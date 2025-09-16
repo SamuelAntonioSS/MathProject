@@ -10,6 +10,7 @@ import { config } from "./config.js";
 import empleadoRoutes from "./routes/empleadoRoutes.js";
 import planillaRoutes from "./routes/planillaRoutes.js";
 import contabilidadRoutes from "./routes/contabilidadRoutes.js";
+import inventarioRoutes from "./routes/inventarioRoutes.js"
 import generarPDFRoutes from "./routes/generarPDF.js"; // Ruta para generar boletas PDF
 
 const app = express();
@@ -86,5 +87,6 @@ app.use("/api/empleados", empleadoRoutes);
 app.use("/api/planillas", planillaRoutes);
 app.use("/api/contabilidad", contabilidadRoutes);
 app.use("/api/boletas", generarPDFRoutes); // Endpoint para generar PDF/Excel
+app.use("/api/inventario", inventarioRoutes);
 
 export default app;

@@ -12,3 +12,4 @@ router.route("/:id")
     .delete(contabilidadController.deleteContabilidad);
 
 export default router;
+    

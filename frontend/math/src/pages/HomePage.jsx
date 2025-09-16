@@ -30,8 +30,8 @@ function HomePage() {
             
             <Link to="/contabilidad" className="hero-card">
               <div className="card-icon">📊</div>
-              <h3>Contabilidad</h3>
-              <p>Controla las finanzas y reportes contables</p>
+              <h3>Inventario</h3>
+              <p>Controla tu inventario de la manera mas optimizada</p>
               <div className="card-arrow">→</div>
             </Link>
           </div>

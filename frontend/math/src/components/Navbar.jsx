@@ -39,11 +39,11 @@ function Navbar() {
           Planilla
         </Link>
         <Link 
-          to="/contabilidad" 
-          className={`nav-link ${isActive('/contabilidad') ? 'active' : ''}`}
+          to="/inventario" 
+          className={`nav-link ${isActive('/inventario') ? 'active' : ''}`}
         >
           <span className="nav-icon">📊</span>
-          Contabilidad
+          Inventario
         </Link>
       </div>
       

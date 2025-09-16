@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage.jsx";
 import Empleados from "./pages/Empleados.jsx";
 import Planilla from "./pages/Planilla.jsx";
 import Contabilidad from "./pages/Contabilidad.jsx";
+import Inventario from "./pages/Inventario.jsx";
 import "./App.css"; // tu CSS mejorado
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/empleados" element={<Empleados />} />
             <Route path="/planilla" element={<Planilla />} />
             <Route path="/contabilidad" element={<Contabilidad />} />
+            <Route path="/inventario" element={<Inventario />} />
             <Route path="*" element={
               <div className="page-container">
                 <h2>Página no encontrada</h2>
