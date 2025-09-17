@@ -1,4 +1,3 @@
-// services/inventarioService.js
 const API_URL = 'https://mathproject.onrender.com/api';
 
 const InventarioService = {
@@ -6,9 +5,7 @@ const InventarioService = {
   getAllMovimientos: async () => {
     try {
       const response = await fetch(`${API_URL}/inventario/movimientos`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return await response.json();
     } catch (error) {
       console.error('Error fetching movimientos:', error);
@@ -21,16 +18,10 @@ const InventarioService = {
     try {
       const response = await fetch(`${API_URL}/inventario/movimientos`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(movimientoData),
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return await response.json();
     } catch (error) {
       console.error('Error creating movimiento:', error);
@@ -43,16 +34,10 @@ const InventarioService = {
     try {
       const response = await fetch(`${API_URL}/inventario/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(movimientoData),
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return await response.json();
     } catch (error) {
       console.error('Error updating movimiento:', error);
@@ -63,14 +48,8 @@ const InventarioService = {
   // Eliminar movimiento
   deleteMovimiento: async (id) => {
     try {
-      const response = await fetch(`${API_URL}/inventario/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      const response = await fetch(`${API_URL}/inventario/${id}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return await response.json();
     } catch (error) {
       console.error('Error deleting movimiento:', error);
@@ -78,22 +57,27 @@ const InventarioService = {
     }
   },
 
-  // Obtener resumen de inventario (opcional)
+  // 🔥 NUEVO: Obtener totales directamente desde el backend
+  getTotales: async () => {
+    try {
+      const response = await fetch(`${API_URL}/inventario/totales`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return await response.json(); // { totalCompras, totalVentas, ganancias }
+    } catch (error) {
+      console.error('Error fetching totales:', error);
+      throw new Error('No se pudieron cargar los totales');
+    }
+  },
+
+  // Opción: calcular resumen en frontend si no quieres backend
   getResumenInventario: async () => {
     try {
       const movimientos = await this.getAllMovimientos();
-      
-      let totalEntradas = 0;
-      let totalSalidas = 0;
-      
+      let totalEntradas = 0, totalSalidas = 0;
       movimientos.forEach(mov => {
-        if (mov.tipoMovimiento === 'entrada') {
-          totalEntradas += mov.total;
-        } else if (mov.tipoMovimiento === 'salida') {
-          totalSalidas += mov.total;
-        }
+        if (mov.tipoMovimiento === 'entrada') totalEntradas += mov.total;
+        else if (mov.tipoMovimiento === 'salida') totalSalidas += mov.total;
       });
-
       return {
         totalEntradas,
         totalSalidas,
