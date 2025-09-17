@@ -22,10 +22,10 @@ function Planilla() {
     try {
       setLoading(true);
       setError(null);
-      
+
       const data = await PlanillaService.getAllPlanillas();
       console.log('Planillas cargadas:', data);
-      
+
       setPlanillas(data);
       setPlanillasFiltradas(data);
     } catch (err) {
@@ -203,6 +203,7 @@ function Planilla() {
                 <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>Subtotal Devengado</th>
                 <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>ISS</th>
                 <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>AFP</th>
+                <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>ISR</th> {/* Nueva columna */}
                 <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>Total Retenciones</th>
                 <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>Líquido a Pagar</th>
                 <th style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'center' }}>Acciones</th>
@@ -234,6 +235,9 @@ function Planilla() {
                   </td>
                   <td style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>
                     ${(planilla.afp || 0).toFixed(2)}
+                  </td>
+                  <td style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>
+                    ${(planilla.isr || 0).toFixed(2)} {/* Muestra el ISR */}
                   </td>
                   <td style={{ padding: '12px', border: '1px solid #dee2e6', textAlign: 'right' }}>
                     ${(planilla.totalRetenciones || 0).toFixed(2)}

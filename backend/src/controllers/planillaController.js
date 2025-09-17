@@ -22,7 +22,18 @@ planillaController.insertPlanilla = async (req, res) => {
         const iss = empleado.sueldoBase * 0.03;
         const afp = empleado.sueldoBase * 0.0725;
         const totalRetenciones = iss + afp;
-        const liquidoAPagar = subTotalDevengado - totalRetenciones;
+
+        // Calcular el exceso sobre $550 para el ISR (supongamos que es el tramo II)
+        const salarioGravado = subTotalDevengado - totalRetenciones; // El salario gravado sería el sueldo después de ISSS y AFP
+        const tramoMinimo = 550.00;
+        let isr = 0;
+
+        if (salarioGravado > tramoMinimo) {
+            const exceso = salarioGravado - tramoMinimo;
+            isr = 17.67 + exceso * 0.10; // 10% sobre el exceso más la parte fija de $17.67
+        }
+
+        const liquidoAPagar = subTotalDevengado - totalRetenciones - isr;
 
         // Guardar planilla
         const nuevaPlanilla = new Planilla({
@@ -34,6 +45,7 @@ planillaController.insertPlanilla = async (req, res) => {
             iss,
             afp,
             totalRetenciones,
+            isr, // Guardar el ISR calculado
             liquidoAPagar
         });
 
@@ -75,7 +87,16 @@ planillaController.updatePlanilla = async (req, res) => {
         const iss = empleado.sueldoBase * 0.03;
         const afp = empleado.sueldoBase * 0.0725;
         const totalRetenciones = iss + afp;
-        const liquidoAPagar = subTotalDevengado - totalRetenciones;
+
+        // Calcular el exceso sobre $550 para el ISR
+        const salarioGravado = subTotalDevengado - totalRetenciones;
+        const tramoMinimo = 550.00;
+        let isr = 0;
+
+        if (salarioGravado > tramoMinimo) {
+            const exceso = salarioGravado - tramoMinimo;
+            isr = 17.67 + exceso * 0.10; // 10% sobre el exceso más la parte fija de $17.67
+        }
 
         // Actualizar campos
         planilla.diasTrabajados = diasTrabajados;
@@ -85,7 +106,8 @@ planillaController.updatePlanilla = async (req, res) => {
         planilla.iss = iss;
         planilla.afp = afp;
         planilla.totalRetenciones = totalRetenciones;
-        planilla.liquidoAPagar = liquidoAPagar;
+        planilla.isr = isr; // Guardar el ISR calculado
+        planilla.liquidoAPagar = subTotalDevengado - totalRetenciones - isr;
 
         await planilla.save();
         res.json({ message: "Planilla actualizada", planilla });
