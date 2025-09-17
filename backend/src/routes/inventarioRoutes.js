@@ -14,6 +14,8 @@ router.route("/")
     .get(inventarioController.getMovimientos)    // ✅ Cambiar a getMovimientos
     .post(inventarioController.insertMovimiento); // ✅ Cambiar a insertMovimiento
 
+router.get("/totales", inventarioController.getTotales);
+
 // Rutas con parámetros
 router.route("/:id")
     .put(inventarioController.updateMovimiento)

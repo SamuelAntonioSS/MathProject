@@ -164,4 +164,26 @@ inventarioController.deleteMovimiento = async (req, res) => {
     }
 };
 
+// Obtener totales de entradas, salidas y ganancias
+inventarioController.getTotales = async (req, res) => {
+  try {
+    const movimientos = await Inventario.find();
+
+    let totalCompras = 0; // Entradas
+    let totalVentas = 0;  // Salidas
+
+    movimientos.forEach(mov => {
+      if (mov.tipoMovimiento === "entrada") totalCompras += mov.total;
+      else if (mov.tipoMovimiento === "salida") totalVentas += mov.total;
+    });
+
+    const ganancias = totalVentas - totalCompras;
+
+    res.json({ totalCompras, totalVentas, ganancias });
+  } catch (error) {
+    console.error("❌ Error al calcular totales:", error);
+    res.status(500).json({ message: "Error al calcular totales", error: error.message });
+  }
+};
+
 export default inventarioController;

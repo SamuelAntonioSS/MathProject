@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InventarioList from "../components/InventarioList";
 import InventarioForm from "../components/InventarioForm";
+import ResumenInventario from "../components/ResumenInventario"; // <-- Importa el resumen
 import InventarioService from "../services/inventarioService";
 
 function Inventario() {
@@ -16,6 +17,15 @@ function Inventario() {
     loadMovimientos();
   }, []);
 
+  const showMessage = (text, type) => {
+    setMessage(text);
+    setMessageType(type);
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 4000);
+  };
+
   const loadMovimientos = async () => {
     try {
       setLoading(true);
@@ -28,19 +38,9 @@ function Inventario() {
     }
   };
 
-  const showMessage = (text, type) => {
-    setMessage(text);
-    setMessageType(type);
-    setTimeout(() => {
-      setMessage('');
-      setMessageType('');
-    }, 4000);
-  };
-
   const handleSubmit = async (formData) => {
     try {
       setFormLoading(true);
-
       if (editingMovimiento) {
         await InventarioService.updateMovimiento(editingMovimiento._id, formData);
         showMessage("Movimiento actualizado correctamente", "success");
@@ -48,10 +48,9 @@ function Inventario() {
         await InventarioService.createMovimiento(formData);
         showMessage("Movimiento registrado correctamente", "success");
       }
-
-      await loadMovimientos();
       setShowForm(false);
       setEditingMovimiento(null);
+      await loadMovimientos();
     } catch (error) {
       showMessage("Error al guardar movimiento: " + error.message, "error");
     } finally {
@@ -86,17 +85,6 @@ function Inventario() {
     setShowForm(true);
   };
 
-  const getTotales = () => {
-    let entrada = 0, salida = 0;
-    movimientos.forEach(mov => {
-      if (mov.tipoMovimiento === "entrada") entrada += mov.total;
-      else if (mov.tipoMovimiento === "salida") salida += mov.total;
-    });
-    return { entrada, salida };
-  };
-
-  const { entrada, salida } = getTotales();
-
   return (
     <div className="page-container">
       <div className="page-header">
@@ -123,18 +111,8 @@ function Inventario() {
         />
       )}
 
-      {!loading && movimientos.length > 0 && (
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-number">${entrada.toFixed(2)}</div>
-            <div className="stat-label">Total Compras (Entradas)</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">${salida.toFixed(2)}</div>
-            <div className="stat-label">Total Ventas (Salidas)</div>
-          </div>
-        </div>
-      )}
+      {/* Aquí llamamos al resumen de inventario usando el componente que hace fetch al backend */}
+      <ResumenInventario />
 
       <div className="card">
         <div className="card-header">
