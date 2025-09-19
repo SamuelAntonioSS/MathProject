@@ -67,7 +67,7 @@ function ResumenInventario() {
 
     lastUpdateInfo: {
       fontSize: '12px',
-      color: '#6b7280',
+      color: '#010307ff',
       marginTop: '8px',
       fontStyle: 'italic'
     },

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import InventarioList from "../components/InventarioList";
 import InventarioForm from "../components/InventarioForm";
 import ResumenInventario from "../components/ResumenInventario";
+import ExportarReportes from "../components/ExportarReportes"; // Nuevo componente
 import InventarioService from "../services/inventarioService";
-import { useInventario } from "../contexts/InventarioContext"; // ⭐ AGREGAR ESTA LÍNEA
+import { useInventario } from "../contexts/InventarioContext";
 
 function Inventario() {
   const [movimientos, setMovimientos] = useState([]);
@@ -14,7 +15,7 @@ function Inventario() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  // ⭐ AGREGAR ESTAS LÍNEAS - Usar el contexto
+  // Contexto
   const { notifyMovimientoCreated, notifyMovimientoDeleted } = useInventario();
 
   useEffect(() => {
@@ -53,12 +54,7 @@ function Inventario() {
         showMessage("Movimiento registrado correctamente", "success");
       }
       
-      // ⭐ AGREGAR ESTA LÍNEA - Notificar al contexto que hubo un cambio
-      notifyMovimientoCreated(
-        formData.tipoMovimiento, 
-        formData.nombreProducto, 
-        formData.unidades
-      );
+      notifyMovimientoCreated(formData.tipoMovimiento, formData.nombreProducto, formData.unidades);
       
       setShowForm(false);
       setEditingMovimiento(null);
@@ -80,10 +76,7 @@ function Inventario() {
       try {
         await InventarioService.deleteMovimiento(id);
         showMessage("Movimiento eliminado correctamente", "success");
-        
-        // ⭐ AGREGAR ESTA LÍNEA - Notificar al contexto que se eliminó un movimiento
         notifyMovimientoDeleted();
-        
         await loadMovimientos();
       } catch (error) {
         showMessage("Error al eliminar: " + error.message, "error");
@@ -105,18 +98,12 @@ function Inventario() {
     <div className="page-container">
       <div className="page-header">
         <h2>Inventario</h2>
-        <button 
-          onClick={handleNew}
-          className="btn-new-empleado"
-          disabled={loading}
-        >
+        <button onClick={handleNew} className="btn-new-empleado" disabled={loading}>
           + Nuevo Movimiento
         </button>
       </div>
 
-      {message && (
-        <div className={`message ${messageType}`}>{message}</div>
-      )}
+      {message && <div className={`message ${messageType}`}>{message}</div>}
 
       {showForm && (
         <InventarioForm
@@ -127,8 +114,11 @@ function Inventario() {
         />
       )}
 
-      {/* Aquí llamamos al resumen de inventario usando el componente que hace fetch al backend */}
+      {/* Resumen de inventario */}
       <ResumenInventario />
+
+      {/* Componente separado para reportes y exportación */}
+      <ExportarReportes movimientos={movimientos} />
 
       <div className="card">
         <div className="card-header">
