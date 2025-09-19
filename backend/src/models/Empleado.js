@@ -9,6 +9,7 @@ const empleadoSchema = new Schema({
     iss: { type: Number, default: 0 },
     afp: { type: Number, default: 0 },
     totalRetenciones: { type: Number, default: 0 },
+    isr: { type: Number, default: 0 }, // Agregado para el cálculo de ISR
     liquidoAPagar: { type: Number, default: 0 },
 }, {
     timestamps: true,

@@ -11,15 +11,42 @@ empleadoController.getEmpleados = async (req, res) => {
 // Crear empleado
 empleadoController.insertEmpleado = async (req, res) => {
     const { nombre, sueldoBase, diasTrabajados, horasExtrasDiurnas, horasExtrasNocturnas } = req.body;
+
+    // Cálculos de ISS y AFP
     const iss = sueldoBase * 0.03;
     const afp = sueldoBase * 0.0725;
     const totalRetenciones = iss + afp;
-    const subTotalDevengado = sueldoBase + (horasExtrasDiurnas * (sueldoBase/240) * 1.25) + (horasExtrasNocturnas * (sueldoBase/240) * 1.75);
-    const liquidoAPagar = subTotalDevengado - totalRetenciones;
+    
+    // Calcular el sueldo gravado
+    const sueldoGravado = sueldoBase - totalRetenciones;
 
+    // Calcular el exceso para ISR
+    let isr = 0;
+    if (sueldoGravado > 550) {
+        const exceso = sueldoGravado - 550;
+        isr = (exceso * 0.10) + 17.67; // Aplicar fórmula del ISR
+    }
+
+    // Total devengado con horas extras
+    const subTotalDevengado = sueldoBase + 
+        (horasExtrasDiurnas * (sueldoBase / 240) * 1.25) + 
+        (horasExtrasNocturnas * (sueldoBase / 240) * 1.75);
+
+    // Salario líquido final
+    const liquidoAPagar = subTotalDevengado - totalRetenciones - isr;
+
+    // Crear el nuevo empleado con todos los datos
     const nuevoEmpleado = new Empleado({
-        nombre, sueldoBase, diasTrabajados, horasExtrasDiurnas, horasExtrasNocturnas,
-        iss, afp, totalRetenciones, liquidoAPagar
+        nombre,
+        sueldoBase,
+        diasTrabajados,
+        horasExtrasDiurnas,
+        horasExtrasNocturnas,
+        iss,
+        afp,
+        totalRetenciones,
+        isr,
+        liquidoAPagar
     });
 
     await nuevoEmpleado.save();
@@ -29,15 +56,42 @@ empleadoController.insertEmpleado = async (req, res) => {
 // Actualizar empleado
 empleadoController.updateEmpleado = async (req, res) => {
     const { nombre, sueldoBase, diasTrabajados, horasExtrasDiurnas, horasExtrasNocturnas } = req.body;
+
+    // Cálculos de ISS y AFP
     const iss = sueldoBase * 0.03;
     const afp = sueldoBase * 0.0725;
     const totalRetenciones = iss + afp;
-    const subTotalDevengado = sueldoBase + (horasExtrasDiurnas * (sueldoBase/240) * 1.25) + (horasExtrasNocturnas * (sueldoBase/240) * 1.75);
-    const liquidoAPagar = subTotalDevengado - totalRetenciones;
+    
+    // Calcular el sueldo gravado
+    const sueldoGravado = sueldoBase - totalRetenciones;
 
+    // Calcular el exceso para ISR
+    let isr = 0;
+    if (sueldoGravado > 550) {
+        const exceso = sueldoGravado - 550;
+        isr = (exceso * 0.10) + 17.67; // Aplicar fórmula del ISR
+    }
+
+    // Total devengado con horas extras
+    const subTotalDevengado = sueldoBase + 
+        (horasExtrasDiurnas * (sueldoBase / 240) * 1.25) + 
+        (horasExtrasNocturnas * (sueldoBase / 240) * 1.75);
+
+    // Salario líquido final
+    const liquidoAPagar = subTotalDevengado - totalRetenciones - isr;
+
+    // Actualizar el empleado con los nuevos datos
     const empleado = await Empleado.findByIdAndUpdate(req.params.id, {
-        nombre, sueldoBase, diasTrabajados, horasExtrasDiurnas, horasExtrasNocturnas,
-        iss, afp, totalRetenciones, liquidoAPagar
+        nombre,
+        sueldoBase,
+        diasTrabajados,
+        horasExtrasDiurnas,
+        horasExtrasNocturnas,
+        iss,
+        afp,
+        totalRetenciones,
+        isr,
+        liquidoAPagar
     }, { new: true });
 
     res.json({ message: "Empleado actualizado", empleado });

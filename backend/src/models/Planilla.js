@@ -1,3 +1,4 @@
+// models/Planilla.js
 import { Schema, model } from "mongoose";
 
 const planillaSchema = new Schema({
@@ -8,9 +9,13 @@ const planillaSchema = new Schema({
     subTotalDevengado: { type: Number, default: 0 },
     iss: { type: Number, default: 0 },
     afp: { type: Number, default: 0 },
+    isr: { type: Number, default: 0 }, // <-- ✅ Agregar este campo
     totalRetenciones: { type: Number, default: 0 },
     liquidoAPagar: { type: Number, default: 0 },
     firma: { type: String, default: "" }
-}, { timestamps: true, strict: false });
+}, {
+    timestamps: true,
+    strict: false
+});
 
 export default model("Planilla", planillaSchema);

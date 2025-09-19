@@ -35,6 +35,7 @@ function EmpleadosList({ empleados, onEdit, onDelete, loading }) {
             <th>H. Extras Nocturnas</th>
             <th>ISSS</th>
             <th>AFP</th>
+            <th>ISR</th> {/* Nueva columna para ISR */}
             <th>Líquido a Pagar</th>
             <th>Acciones</th>
           </tr>
@@ -49,6 +50,7 @@ function EmpleadosList({ empleados, onEdit, onDelete, loading }) {
               <td>{emp.horasExtrasNocturnas || 0}</td>
               <td>{formatCurrency(emp.iss || 0)}</td>
               <td>{formatCurrency(emp.afp || 0)}</td>
+              <td>{formatCurrency(emp.isr || 0)}</td> {/* Mostrar ISR */}
               <td><strong style={{color: '#10b981'}}>{formatCurrency(emp.liquidoAPagar || 0)}</strong></td>
               <td className="actions-cell">
                 <button 
