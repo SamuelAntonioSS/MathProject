@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import InventarioList from "../components/InventarioList";
 import InventarioForm from "../components/InventarioForm";
-import ResumenInventario from "../components/ResumenInventario"; // <-- Importa el resumen
+import ResumenInventario from "../components/ResumenInventario";
 import InventarioService from "../services/inventarioService";
+import { useInventario } from "../contexts/InventarioContext"; // ⭐ AGREGAR ESTA LÍNEA
 
 function Inventario() {
   const [movimientos, setMovimientos] = useState([]);
@@ -12,6 +13,9 @@ function Inventario() {
   const [editingMovimiento, setEditingMovimiento] = useState(null);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
+
+  // ⭐ AGREGAR ESTAS LÍNEAS - Usar el contexto
+  const { notifyMovimientoCreated, notifyMovimientoDeleted } = useInventario();
 
   useEffect(() => {
     loadMovimientos();
@@ -48,6 +52,14 @@ function Inventario() {
         await InventarioService.createMovimiento(formData);
         showMessage("Movimiento registrado correctamente", "success");
       }
+      
+      // ⭐ AGREGAR ESTA LÍNEA - Notificar al contexto que hubo un cambio
+      notifyMovimientoCreated(
+        formData.tipoMovimiento, 
+        formData.nombreProducto, 
+        formData.unidades
+      );
+      
       setShowForm(false);
       setEditingMovimiento(null);
       await loadMovimientos();
@@ -68,6 +80,10 @@ function Inventario() {
       try {
         await InventarioService.deleteMovimiento(id);
         showMessage("Movimiento eliminado correctamente", "success");
+        
+        // ⭐ AGREGAR ESTA LÍNEA - Notificar al contexto que se eliminó un movimiento
+        notifyMovimientoDeleted();
+        
         await loadMovimientos();
       } catch (error) {
         showMessage("Error al eliminar: " + error.message, "error");

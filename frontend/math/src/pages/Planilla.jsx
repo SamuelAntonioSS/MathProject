@@ -4,6 +4,7 @@ import CrearPlanilla from "../components/CrearPlanilla";
 import EditarPlanilla from "../components/EditarPlanilla";
 import FiltrosPlanillas from "../components/FiltrosPlanillas";
 import GenerarPDF from "../components/GenerarPDF";
+import GenerarExcel from "../components/GenerarExcel";
 import Dashboard from "../components/Dashboard";
 
 function Planilla() {
@@ -105,11 +106,24 @@ function Planilla() {
         onFilterChange={handleFilterChange}
       />
 
-      {/* Componente para generar PDF */}
-      <GenerarPDF 
-        planillas={planillasFiltradas}
-        titulo="Reporte de Planillas Filtradas"
-      />
+      {/* Componentes para generar reportes */}
+      <div style={{ 
+        display: 'flex', 
+        gap: '15px', 
+        marginBottom: '20px',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+      }}>
+        <GenerarPDF 
+          planillas={planillasFiltradas}
+          titulo="Reporte de Planillas Filtradas"
+        />
+        
+        <GenerarExcel 
+          planillas={planillasFiltradas}
+          titulo="Reporte de Planillas Filtradas"
+        />
+      </div>
       
       {/* Botones de control */}
       <div style={{ 
@@ -136,7 +150,7 @@ function Planilla() {
         </button>
         
         <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-          <span style={{ color: '#666', fontSize: '14px' }}>
+          <span style={{ color: '#130606ff', fontSize: '14px' }}>
             📊 Total: <strong>{planillas.length}</strong> planillas | 
             📋 Filtradas: <strong>{planillasFiltradas.length}</strong>
           </span>

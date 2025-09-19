@@ -1,25 +1,36 @@
 import React, { useEffect, useState } from "react";
 import InventarioService from "../services/inventarioService";
+import { useInventario } from "../contexts/InventarioContext"; // Importar el contexto
 
 function ResumenInventario() {
   const [totales, setTotales] = useState({ totalCompras: 0, totalVentas: 0, ganancias: 0 });
   const [loading, setLoading] = useState(true);
+  const { refreshKey, lastUpdate } = useInventario(); // Usar el contexto
 
+  const loadTotales = async () => {
+    try {
+      setLoading(true);
+      const response = await InventarioService.getTotales();
+      setTotales(response);
+      console.log('📊 Datos del resumen actualizados:', response);
+    } catch (error) {
+      console.error("Error al cargar totales:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Cargar datos inicialmente
   useEffect(() => {
-    const loadTotales = async () => {
-      try {
-        setLoading(true);
-        const response = await InventarioService.getTotales();
-        setTotales(response);
-      } catch (error) {
-        console.error("Error al cargar totales:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadTotales();
   }, []);
+
+  // Recargar datos cuando refreshKey cambie (cuando se notifique una actualización)
+  useEffect(() => {
+    if (refreshKey > 0) {
+      loadTotales();
+    }
+  }, [refreshKey]);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('es-US', {
@@ -52,6 +63,13 @@ function ResumenInventario() {
       fontSize: '16px',
       color: '#0a1f49ff',
       fontWeight: '500'
+    },
+
+    lastUpdateInfo: {
+      fontSize: '12px',
+      color: '#6b7280',
+      marginTop: '8px',
+      fontStyle: 'italic'
     },
 
     gridContainer: {
@@ -188,27 +206,42 @@ function ResumenInventario() {
       background: 'rgba(255, 255, 255, 0.2)',
       color: '#ffffff',
       backdropFilter: 'blur(10px)'
+    },
+
+    refreshIndicator: {
+      position: 'absolute',
+      top: '16px',
+      right: '16px',
+      width: '12px',
+      height: '12px',
+      borderRadius: '50%',
+      background: '#10b981',
+      animation: loading ? 'pulse 1.5s ease-in-out infinite' : 'none'
     }
   };
 
-  // Agregar animación CSS para el spinner
-  const spinKeyframes = `
+  // Agregar animaciones CSS
+  const animationStyles = `
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
   `;
 
   useEffect(() => {
     const styleSheet = document.styleSheets[0];
     try {
-      styleSheet.insertRule(spinKeyframes, styleSheet.cssRules.length);
+      styleSheet.insertRule(animationStyles.replace(/\s+/g, ' '), styleSheet.cssRules.length);
     } catch (e) {
       // Si ya existe la regla, ignora el error
     }
   }, []);
 
-  if (loading) {
+  if (loading && refreshKey === 0) {
     return (
       <div style={styles.container}>
         <div style={styles.header}>
@@ -258,16 +291,22 @@ function ResumenInventario() {
       <div style={styles.header}>
         <h2 style={styles.title}>📊 Dashboard Financiero</h2>
         <p style={styles.subtitle}>Resumen completo de tu inventario y rendimiento</p>
+        {lastUpdate && (
+          <p style={styles.lastUpdateInfo}>
+            Última actualización: {new Date(lastUpdate).toLocaleString('es-ES')}
+          </p>
+        )}
       </div>
 
       <div style={styles.gridContainer}>
         {cardData.map((card, index) => (
           <div
             key={index}
-            style={{...styles.card, ...card.style}}
+            style={{...styles.card, ...card.style, position: 'relative'}}
             onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
-            onMouseLeave={(e) => Object.assign(e.currentTarget.style, {...styles.card, ...card.style})}
+            onMouseLeave={(e) => Object.assign(e.currentTarget.style, {...styles.card, ...card.style, position: 'relative'})}
           >
+            {loading && <div style={styles.refreshIndicator}></div>}
             <div style={styles.decorativeShape}></div>
             <div style={styles.cardContent}>
               <div style={styles.cardIcon}>

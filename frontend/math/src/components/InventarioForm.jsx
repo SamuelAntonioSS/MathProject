@@ -53,6 +53,18 @@ function InventarioForm({ movimiento, onSubmit, onCancel, loading }) {
     loadProductosConStock();
   }, [formData.tipoMovimiento, formData.nombreProducto]);
 
+  // Función para manejar el focus en campos numéricos
+  const handleFocusNumericField = (e) => {
+    // Seleccionar todo el texto cuando se hace focus
+    e.target.select();
+  };
+
+  // Función para manejar el click en campos numéricos  
+  const handleClickNumericField = (e) => {
+    // Seleccionar todo el texto cuando se hace click
+    e.target.select();
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -359,6 +371,8 @@ function InventarioForm({ movimiento, onSubmit, onCancel, loading }) {
             name="unidades"
             value={formData.unidades}
             onChange={handleChange}
+            onFocus={handleFocusNumericField}
+            onClick={handleClickNumericField}
             style={styles.input}
             required
             min="1"
@@ -374,6 +388,8 @@ function InventarioForm({ movimiento, onSubmit, onCancel, loading }) {
             name="precioUnitario"
             value={formData.precioUnitario}
             onChange={handleChange}
+            onFocus={handleFocusNumericField}
+            onClick={handleClickNumericField}
             style={styles.input}
             required
             min="0"
